@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from tab_num.logics import NumericColumn
+from logics import NumericColumn
 
 def display_tab_num_content(file_path=None, df=None):
     """
@@ -31,16 +31,12 @@ def display_tab_num_content(file_path=None, df=None):
     instance = NumericColumn()
     data_columns = ['random string', 'random string1', 'random string 2']
 
-    # st.title("FX Converter")
-
     select_column = st.selectbox("Which numeric column do you want to explore", data_columns)
 
     # Based on select_column, generate below data
-    # 
-    # NumericColumn.set_data(select_column)
-    # num = NumericColumn.get_summary(<Get Numeric Column Table>)
+    # instance.set_data(select_column)
+    # num = instance.get_summary(<Get Numeric Column Table>)
     num = {
-        '': [0, 1, 2, 3, 4, 5, 6, 7, 8],
         'Description': [
             "Number of Unique Values",
             "Number of Missing Values",
@@ -61,12 +57,11 @@ def display_tab_num_content(file_path=None, df=None):
     st.write("Numeric Column")
     st.table(num_column)
     
-    # NumericColumn.set_histogram()
+    # instance.set_histogram()
     # st.altair_chart(instance.histogram)
 
-    #num = NumericColumn.get_summary(<Get Most Frequent Values Table>) 
+    #num = instance.get_summary(<Get Most Frequent Values Table>) 
     freq = {
-        '': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         'value': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         'occ': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         'percentage': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -76,5 +71,19 @@ def display_tab_num_content(file_path=None, df=None):
 
     st.write("Most Frequent Values")
     st.table(freq_Data)
+    
+def dataframe():
+    st.write("This is the dataframe.")
+
+def text_series():
+    st.write("This is the text series.")
+
+tab1, tab2, tab3 = st.tabs(["DataFrame", "Numeric Series", "Text Series"])
 
 # display_tab_num_content()
+with tab1:
+    dataframe()
+with tab2:
+    display_tab_num_content()
+with tab3:
+    text_series()
