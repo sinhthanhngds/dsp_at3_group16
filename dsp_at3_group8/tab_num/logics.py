@@ -44,14 +44,14 @@ class NumericColumn:
         self.n_zeros = None
         self.n_negatives = None
         self.histogram = alt.Chart()
-        self.frequent = pd.DataFrame(columns=['value', 'occurrence', 'percentage'])
+        self.frequent = pd.DataFrame(columns=["value", "occurrence", "percentage"])
 
     def find_num_cols(self):
         """
         --------------------
         Description
         --------------------
-        -> find_num_cols (method): Class method that will load the uploaded CSV file as Pandas DataFrame and store it as attribute (self.df) if it hasn't been provided before.
+        -> find_num_cols (method): Class method that will load the uploaded CSV file as Pandas DataFrame and store it as attribute (self.df) if it hasn"t been provided before.
         Then it will find all columns of numeric data type and store the results in the relevant attribute (self.cols_list).
 
         --------------------
@@ -66,11 +66,13 @@ class NumericColumn:
 
         """
         if self.df == None:
+            print("No df")
             if self.file_path != None:
+                print("detect file path")
                 try:
                     dataframe = pd.read_csv(self.file_path)
-                    numeric_df = dataframe.select_dtypes(include=['number']).columns
-                    self.cols_list = numeric_df
+                    numeric_columns = dataframe.select_dtypes(include=["number"]).columns.tolist()
+                    self.cols_list = numeric_columns
                     self.df = dataframe
                     print("File loaded successfully!")
                 except pd.errors.EmptyDataError:
@@ -82,9 +84,11 @@ class NumericColumn:
                 except Exception as e:
                     print(f"An unexpected error occurred: {e}")
             else:
-                self.df = pd.DataFrame()
+                print("didn't detect file path")
+                self.df = None
         else:
-            numeric_df = self.df.select_dtypes(include=['number']).columns
+            print("There is df")
+            numeric_df = self.df.select_dtypes(include=["number"]).columns
             self.cols_list = numeric_df
 
     def set_data(self, col_name):
@@ -105,12 +109,10 @@ class NumericColumn:
         -> None
 
         """
-        if self.df.empty is not True:
-            self.serie = self.df[col_name]
-            self.convert_serie_to_num()
-            self.set_frequent()
-        self.set_histogram()
-        self.get_summary()
+        if isinstance(self.df, pd.DataFrame):
+            if not self.df.empty:
+                self.serie = self.df[col_name]
+                self.convert_serie_to_num()
         
 
     def convert_serie_to_num(self):
@@ -157,8 +159,11 @@ class NumericColumn:
         -> (bool): Flag stating if the serie is empty or not
 
         """
-        if self.serie != None or self.serie != "":
-            return True
+        if isinstance(self.serie, pd.Series):
+            if not self.serie.empty:
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -182,6 +187,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.n_unique = len(self.serie.unique())
+        else:
+            self.n_unique = "Nan"
 
     def set_missing(self):
         """
@@ -203,6 +210,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.n_missing = self.serie.isnull().sum()
+        else:
+            self.n_missing = "Nan"
 
     def set_zeros(self):
         """
@@ -224,6 +233,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.n_zeros = self.serie.value_counts().get(0, 0)
+        else:
+            self.n_zeros = "Nan"
 
     def set_negatives(self):
         """
@@ -245,7 +256,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.n_negatives = (self.serie < 0).sum()
-        
+        else:
+            self.n_negatives = "Nan"
 
     def set_mean(self):
         """
@@ -267,7 +279,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.col_mean = self.serie.mean()
-        
+        else:
+            self.col_mean = "Nan"
 
     def set_std(self):
         """
@@ -289,7 +302,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.col_std = self.serie.std()
-
+        else:
+            self.col_std = "Nan"
     
     def set_min(self):
         """
@@ -311,6 +325,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.col_min = self.serie.min()
+        else:
+            self.col_min = "Nan"             
 
     def set_max(self):
         """
@@ -332,6 +348,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.col_max = self.serie.max()
+        else:
+            self.col_max = "Nan"             
 
     def set_median(self):
         """
@@ -353,6 +371,8 @@ class NumericColumn:
         """
         if self.is_serie_none():
             self.col_median = self.serie.median()
+        else:
+            self.col_median = "Nan"               
 
     def set_histogram(self):
         """
@@ -377,7 +397,7 @@ class NumericColumn:
             column_name = self.serie.name
             chart = alt.Chart(dataframe[:5000]).mark_bar().encode(
                 alt.X(f"{column_name}:Q", bin=True),
-                y='count()'
+                y="count()"
             )
             self.histogram = chart
         else:
@@ -413,9 +433,14 @@ class NumericColumn:
                 percentage = count / self.serie.size
                 unique_value_count.append(count)
                 unique_value_per.append(percentage)
-            self.frequent['value'] = top_20_values
-            self.frequent['occurrence'] = unique_value_count
-            self.frequent['percentage'] = unique_value_per
+            self.frequent["value"] = top_20_values
+            self.frequent["occurrence"] = unique_value_count
+            self.frequent["percentage"] = unique_value_per
+        else:
+            self.frequent["value"] = ["Nan"]
+            self.frequent["occurrence"] = ["Nan"]
+            self.frequent["percentage"] = ["Nan"]
+
         
     def get_summary(self):
         """
@@ -469,5 +494,4 @@ class NumericColumn:
         ]
         return summary_table
     
-    find_num_cols()
 

@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from logics import NumericColumn
+from tab_num.logics import NumericColumn
 
 def display_tab_num_content(file_path=None, df=None):
     """
@@ -28,49 +28,30 @@ def display_tab_num_content(file_path=None, df=None):
     -> None
 
     """
-    instance = NumericColumn()
-    data_columns = ['random string', 'random string1', 'random string 2']
+    instance = NumericColumn(file_path, df)
+    instance.find_num_cols()
 
-    select_column = st.selectbox("Which numeric column do you want to explore", data_columns)
+    select_column = st.selectbox("Which numeric column do you want to explore", instance.cols_list)
 
     # Based on select_column, generate below data
-    # instance.set_data(select_column)
-    # num = instance.get_summary(<Get Numeric Column Table>)
-    num = {
-        'Description': [
-            "Number of Unique Values",
-            "Number of Missing Values",
-            "Number of Ocurrence of 0 Value",
-            "Number of Negative Values",
-            "The Average Value",
-            "The Standard Deviation Value",
-            "The Minimum Value",
-            "The Maximum Value",
-            "The Median Value"
-            ],
-        'Value': [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    }
-
-
+    instance.set_data(col_name = select_column)
+    num = instance.get_summary()
+    
+    
     num_column = pd.DataFrame(num)
 
     st.write("Numeric Column")
     st.table(num_column)
     
-    # instance.set_histogram()
-    # st.altair_chart(instance.histogram)
+    st.write("**Histogram**")
+    instance.set_histogram()
+    st.altair_chart(instance.histogram)
 
-    #num = instance.get_summary(<Get Most Frequent Values Table>) 
-    freq = {
-        'value': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        'occ': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        'percentage': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    }
+    instance.set_frequent()
+    freq_Data = instance.frequent
 
-    freq_Data = pd.DataFrame(freq)
-
-    st.write("Most Frequent Values")
-    st.table(freq_Data)
+    st.write("**Most Frequent Values**")
+    st.dataframe(freq_Data)
     
 def dataframe():
     st.write("This is the dataframe.")
@@ -85,5 +66,6 @@ with tab1:
     dataframe()
 with tab2:
     display_tab_num_content()
+    # display_tab_num_content()
 with tab3:
     text_series()
