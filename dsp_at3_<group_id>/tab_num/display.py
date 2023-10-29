@@ -27,13 +27,13 @@ def display_tab_num_content(df = None, file_path=None):
     -> None
 
     """
-    num_df = NumericColumn(df = df)
-    num_df.find_num_cols()
-    col = st.selectbox ('Which column do you want to explore', num_df.cols_list)
-    num_df.set_data(col)
-    st.table (num_df.get_summary())
-    st.altair_chart(num_df.histogram)
-    st.table (num_df.frequent)
+    st.session_state.num_column = NumericColumn(df = df)
+    st.session_state.num_column.find_num_cols()
+    col = st.selectbox ('Which column do you want to explore', st.session_state.num_column.cols_list)
+    st.session_state.num_column.set_data(col)
+    st.table (st.session_state.num_column.get_summary())
+    st.altair_chart(st.session_state.num_column.histogram)
+    st.table (st.session_state.num_column.frequent)
     
 
 

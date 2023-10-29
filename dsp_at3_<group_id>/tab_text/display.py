@@ -27,13 +27,13 @@ def display_tab_text_content(file_path=None, df=None):
     -> None
 
     """
-    text_df = TextColumn (df = df)
-    text_df.find_text_cols()
-    text_col_select = st.selectbox ('Which text column do you want to analyze', text_df.cols_list)
-    text_df.set_data (text_col_select)
-    st.table (text_df.get_summary())
-    st.altair_chart(text_df.barchart)
-    st.table (text_df.frequent)
+    st.session_state.text_column = TextColumn (df = df)
+    st.session_state.text_column.find_text_cols()
+    st.session_state.selected_text_col = st.selectbox ('Which text column do you want to analyze', st.session_state.text_column.cols_list)
+    st.session_state.text_column.set_data (st.session_state.selected_text_col)
+    st.table (st.session_state.text_column.get_summary())
+    st.altair_chart(st.session_state.text_column.barchart)
+    st.table (st.session_state.text_column.frequent)
 
 
 

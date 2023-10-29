@@ -25,24 +25,21 @@ def display_tab_df_content(file_path):
     -> None
     
     """
-    df_data = Dataset(file_path)
-    #st.session_state.get('df', df_data)
-    df_data.set_data()
-    st.session_state.df = df_data.df
-    #print (st.session_state['df'])
-    st.table (df_data.get_summary())
-    st.write (df_data.table.astype ('str'))
+    st.session_state.dataset = Dataset (file_path)
+    st.session_state.dataset.set_data()
+    st.table (st.session_state.dataset.get_summary())
+    st.write (st.session_state.dataset.table.astype ('str'))
     num_rows = st.slider ('Select number of rows to display',min_value = 1, max_value = 50)
     method = st.radio (
         'Select method',
         ['Head', 'Tail', 'Sample']
     )
     if method == 'Head':
-        st.write (df_data.get_head(num_rows))
+        st.write (st.session_state.dataset.get_head(num_rows))
     elif method == 'Tail':
-        st.write (df_data.get_tail(num_rows))
+        st.write (st.session_state.dataset.get_tail(num_rows))
     else:
-        st.write (df_data.get_sample (num_rows))
+        st.write (st.session_state.dataset.get_sample (num_rows))
     
 
 

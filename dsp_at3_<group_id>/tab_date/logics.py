@@ -1,5 +1,7 @@
 import pandas as pd
 import altair as alt
+from collections import Counter
+import datetime
 
 class DateColumn:
     """
@@ -52,7 +54,7 @@ class DateColumn:
         --------------------
         -> find_date_cols (method): Class method that will load the uploaded CSV file as Pandas DataFrame and store it as attribute (self.df) if it hasn't been provided before.
         Then it will find all columns of datetime data type. If it can't find any datetime then it will look for all columns of text time. Then it will store the results in the relevant attribute (self.cols_list).
-
+        
         --------------------
         Parameters
         --------------------
@@ -64,8 +66,10 @@ class DateColumn:
         -> None
 
         """
-        
-
+        datetime_cols = self.df.select_dtypes (include = ['datetime64']).columns
+        if len(datetime_cols) == 0:
+            datetime_cols = self.df.select_dtypes (include = ['object']).columns
+        self.cols_list = datetime_cols
     def set_data(self, col_name):
         """
         --------------------
@@ -86,6 +90,24 @@ class DateColumn:
         --------------------
         -> None
         """
+        self.serie = self.df[col_name]
+        try:
+            self.convert_serie_to_date()
+            self.set_unique()
+            self.set_missing()
+            self.set_min()
+            self.set_max()
+            self.set_weekend()
+            self.set_weekday()
+            self.set_future()
+            self.set_empty_1900()
+            self.set_empty_1970()
+            self.set_barchart()
+            self.set_frequent()
+        except:
+            pass
+
+        
         
 
     def convert_serie_to_date(self):
@@ -106,7 +128,11 @@ class DateColumn:
         -> None
 
         """
-        
+        try:
+            self.serie = pd.to_datetime (self.serie)
+        except:
+            pass          
+  
 
     def is_serie_none(self):
         """
@@ -121,11 +147,15 @@ class DateColumn:
         -> None
 
         --------------------
-        Returns
+        Returnsi
         --------------------
         -> (bool): Flag stating if the serie is empty or not
 
         """
+        if self.serie.empty or self.serie is None:
+            return True
+        else:
+            return False
         
 
     def set_unique(self):
@@ -146,6 +176,7 @@ class DateColumn:
         -> None
 
         """
+        self.n_unique = len(self.serie.unique())
         
 
     def set_missing(self):
@@ -166,6 +197,8 @@ class DateColumn:
         -> None
 
         """
+        self.n_missing = self.serie.isna().sum()
+
         
 
     def set_min(self):
@@ -186,6 +219,7 @@ class DateColumn:
         -> None
 
         """
+        self.col_min = self.serie.min()
         
 
     def set_max(self):
@@ -206,6 +240,7 @@ class DateColumn:
         -> None
 
         """
+        self.col_max = self.serie.max()
         
 
     def set_weekend(self):
@@ -226,6 +261,7 @@ class DateColumn:
         -> None
 
         """
+        self.n_weekend = self.serie.dt.dayofweek.isin([5, 6]).sum()
         
 
     def set_weekday(self):
@@ -246,7 +282,7 @@ class DateColumn:
         -> None
 
         """
-        
+        self.n_weekday = self.serie.dt.dayofweek.isin([0, 1, 2, 3, 4]).sum()
 
     def set_future(self):
         """
@@ -266,6 +302,7 @@ class DateColumn:
         -> None
 
         """
+        self.n_future = (self.serie.dt.date > pd.Timestamp ('now').date()).sum()
         
     
     def set_empty_1900(self):
@@ -286,8 +323,8 @@ class DateColumn:
         -> None
 
         """
-        
-
+        self.n_empty_1900 = (self.serie.dt.date == pd.Timestamp ('1900-01-01').date()).sum()
+    
     def set_empty_1970(self):
         """
         --------------------
@@ -306,7 +343,7 @@ class DateColumn:
         -> None
 
         """
-        
+        self.n_empty_1970 = (self.serie.dt.date == pd.Timestamp ('1970-01-01').date()).sum()
 
     def set_barchart(self):  
         """
@@ -326,6 +363,14 @@ class DateColumn:
         -> None
 
         """
+        data_dict = dict(Counter (self.serie))
+        data_ = pd.DataFrame (data = {f'Value': data_dict.keys(), 'Count of Records' : data_dict.values()})
+        self.barchart = alt.Chart(data_).mark_bar().encode( 
+        x='Value',
+        y='Count of Records'
+        ).properties(
+            title = 'Bar Chart: Date record fluency'
+             ).interactive()
         
       
     def set_frequent(self, end=20):
@@ -347,6 +392,11 @@ class DateColumn:
         -> None
 
         """
+        data = {'value':self.serie}
+        df_ = pd.DataFrame(data)
+        df_frequent = df_.groupby('value').size().reset_index(name = 'occurrence')
+        df_frequent['percentage'] = df_frequent['occurrence']/df_frequent['occurrence'].sum()
+        self.frequent = df_frequent.sort_values (['occurrence'], ascending = False).head (end)
         
 
     def get_summary(self):
@@ -367,4 +417,28 @@ class DateColumn:
         -> (pd.DataFrame): Formatted dataframe to be displayed on the Streamlit app
 
         """
+        df = pd.DataFrame (data = {
+                     'Decription': ['Number of Unique Values',
+                                    'Number of Rows with Missing Values',
+                                    'Number of Weekend Dates',
+                                    'Number of Weekday Dates',
+                                    'Number of Dates in Future',
+                                    'Number of Rows with 1900-01-01',
+                                    'Number of Rows with 1970-01-01',
+                                    'Minimum Value',
+                                    'Maximum Value'],
+                    'Value' : [
+                                    self.n_unique,
+                                    self.n_missing,
+                                    self.n_weekend,
+                                    self.n_weekday,
+                                    self.n_future,
+                                    self.n_empty_1900,
+                                    self.n_empty_1970,
+                                    self.col_min,
+                                    self.col_max
+                                ]
+                        })
+        return df.astype ('str')
+        
         
