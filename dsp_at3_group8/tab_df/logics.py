@@ -51,6 +51,7 @@ class Dataset:
         --------------------
         -> None
         """
+        return [self.n_rows, self.n_cols, self.n_duplicates, self.n_missing]
         
         
     def set_df(self):
@@ -71,6 +72,11 @@ class Dataset:
         -> None
 
         """
+        if self.file_path is not None:
+            self.df = pd.read_csv(self.file_path, sep=';')
+        else:
+            self.df = "No CSV Selected"
+        
         
 
     def is_df_none(self):
@@ -91,6 +97,7 @@ class Dataset:
         -> (bool): Flag stating if self.df is empty or not
 
         """
+        return self.df.empty
         
 
     def set_columns(self):
@@ -111,6 +118,8 @@ class Dataset:
         -> None
 
         """
+        if self.is_df_none() == False:
+            self.cols_list = [col.upper() for col in self.df.columns]
         
 
     def set_dimensions(self):
@@ -131,7 +140,8 @@ class Dataset:
         -> None
 
         """
-        
+        if self.is_df_none() == False:
+            self.n_rows, self.n_cols = self.df.shape        
 
     def set_duplicates(self):
         """
@@ -152,6 +162,9 @@ class Dataset:
 
         """
         
+        if self.is_df_none() == False:
+            self.n_duplicates = self.df.duplicated().sum()
+        
 
     def set_missing(self):
         """
@@ -171,6 +184,9 @@ class Dataset:
         -> None
 
         """
+        
+        if self.is_df_none() == False:
+            self.n_missing = self.df.isna().sum().sum()
         
 
     def set_numeric(self):
@@ -231,6 +247,8 @@ class Dataset:
         -> (Pandas.DataFrame): First rows of dataframe
 
         """
+        if self.is_df_none() == False:
+            return self.df.head(n)
         
 
     def get_tail(self, n=5):
@@ -251,6 +269,8 @@ class Dataset:
         -> (Pandas.DataFrame): Last rows of dataframe
 
         """
+        if self.is_df_none() == False:
+            return self.df.tail(n)
         
 
     def get_sample(self, n=5):
@@ -271,6 +291,8 @@ class Dataset:
         -> (Pandas.DataFrame): Sampled dataframe
 
         """
+        if self.is_df_none() == False:
+            return self.df.sample(n)
         
 
 
@@ -292,6 +314,13 @@ class Dataset:
         -> None
 
         """
+        if self.is_df_none() == False:
+            return pd.DataFrame({
+                    'column': self.df.columns,
+                    'data_type': self.df.dtypes,
+                    'memory': self.df.memory_usage(index=False)
+                }).reset_index(drop=True)
+            
 
 
     def get_summary(self):
@@ -307,3 +336,9 @@ class Dataset:
         -> (pd.DataFrame): Formatted dataframe to be displayed on the Streamlit app
 
         """
+        Description = ['Number of Rows', 'Number of Columns', 'Number of Duplicated Rows', 'Number of Missing Values']
+        if self.is_df_none() == False:
+            return pd.DataFrame({
+                    'Description': Description,
+                    'Value': [self.n_rows, self.n_cols, self.n_duplicates, self.n_missing]
+                    }).reset_index(drop=True)
