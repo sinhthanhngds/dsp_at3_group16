@@ -25,18 +25,19 @@ def display_tab_df_content(file_path):
     -> None
     
     """
-    data = Dataset(file_path)
-    data.set_df()
-    data.set_columns()
-    data.set_dimensions()
-    data.set_duplicates()
-    data.set_missing()
-    ds_summary = data.get_summary()
-    ds_table = data.set_table()
+    st.session_state.file_path = file_path
+    st.session_state.dataset = Dataset(st.session_state.file_path)
+    st.session_state.dataset.set_df()
+    st.session_state.dataset.set_columns()
+    st.session_state.dataset.set_dimensions()
+    st.session_state.dataset.set_duplicates()
+    st.session_state.dataset.set_missing()
+    ds_summary = st.session_state.dataset.get_summary()
+    ds_table = st.session_state.dataset.set_table()
     
     with st.expander("DataFrame"):
         st.table(ds_summary)
-        st.table(ds_table)
+        st.table(ds_table.astype ('str'))
     
     with st.expander("Explore DataFrame"):
         n = st.slider(
@@ -54,17 +55,17 @@ def display_tab_df_content(file_path):
             st.title(
                 "Top Rows of Selected Table"
                 )
-            ds_head = data.get_head(n)
+            ds_head = st.session_state.dataset.get_head(n)
             st.write(ds_head)
         elif option == "Tail":
             st.title(
                 "Bottom Rows of Selected Table"
                 )
-            ds_tail = data.get_tail(n)
+            ds_tail = st.session_state.dataset.get_tail(n)
             st.write(ds_tail)
         elif option == "Sample":
             st.title(
                 "Sample Rows of Selected Table"
                 )
-            ds_sample = data.get_sample(n)
+            ds_sample = st.session_state.dataset.get_sample(n)
             st.write(ds_sample)

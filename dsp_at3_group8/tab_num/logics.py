@@ -65,7 +65,7 @@ class NumericColumn:
         -> None
 
         """
-        if self.df == None:
+        if self.df is None:
             print("No df")
             if self.file_path != None:
                 print("detect file path")
