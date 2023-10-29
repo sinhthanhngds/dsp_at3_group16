@@ -247,7 +247,7 @@ class Dataset:
         -> (Pandas.DataFrame): First rows of dataframe
 
         """
-        if self.is_df_none == False:
+        if self.is_df_none() == False:
             return self.df.head(n)
         
 
@@ -269,7 +269,7 @@ class Dataset:
         -> (Pandas.DataFrame): Last rows of dataframe
 
         """
-        if self.is_df_none == False:
+        if self.is_df_none() == False:
             return self.df.tail(n)
         
 
@@ -291,8 +291,8 @@ class Dataset:
         -> (Pandas.DataFrame): Sampled dataframe
 
         """
-        if self.is_df_none == False:
-            self.df.sample(n)
+        if self.is_df_none() == False:
+            return self.df.sample(n)
         
 
 
@@ -314,13 +314,13 @@ class Dataset:
         -> None
 
         """
-        if self.is_df_none == False:
+        if self.is_df_none() == False:
             return pd.DataFrame({
-                'column': self.df.columns,
-                'data_type': self.df.dtypes,
-                'memory': self.df.memory_usage(index=False)
-            }).reset_index(drop=True)
-        
+                    'column': self.df.columns,
+                    'data_type': self.df.dtypes,
+                    'memory': self.df.memory_usage(index=False)
+                }).reset_index(drop=True)
+            
 
 
     def get_summary(self):
@@ -336,9 +336,9 @@ class Dataset:
         -> (pd.DataFrame): Formatted dataframe to be displayed on the Streamlit app
 
         """
-        if self.is_df_none == False:
-            Description = ['Number of Rows', 'Number of Columns', 'Number of Duplicated Rows', 'Number of Missing Values']
+        Description = ['Number of Rows', 'Number of Columns', 'Number of Duplicated Rows', 'Number of Missing Values']
+        if self.is_df_none() == False:
             return pd.DataFrame({
-                'Description': Description,
-                'Value': self.set_data()
-            }).reset_index(drop=True)
+                    'Description': Description,
+                    'Value': [self.n_rows, self.n_cols, self.n_duplicates, self.n_missing]
+                    }).reset_index(drop=True)
