@@ -44,14 +44,14 @@ class NumericColumn:
         self.n_zeros = None
         self.n_negatives = None
         self.histogram = alt.Chart()
-        self.frequent = pd.DataFrame(columns=['value', 'occurrence', 'percentage'])
+        self.frequent = pd.DataFrame(columns=["value", "occurrence", "percentage"])
 
     def find_num_cols(self):
         """
         --------------------
         Description
         --------------------
-        -> find_num_cols (method): Class method that will load the uploaded CSV file as Pandas DataFrame and store it as attribute (self.df) if it hasn't been provided before.
+        -> find_num_cols (method): Class method that will load the uploaded CSV file as Pandas DataFrame and store it as attribute (self.df) if it hasn"t been provided before.
         Then it will find all columns of numeric data type and store the results in the relevant attribute (self.cols_list).
 
         --------------------
@@ -65,7 +65,31 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.df is None:
+            print("No df")
+            if self.file_path != None:
+                print("detect file path")
+                try:
+                    dataframe = pd.read_csv(self.file_path)
+                    numeric_columns = dataframe.select_dtypes(include=["number"]).columns.tolist()
+                    self.cols_list = numeric_columns
+                    self.df = dataframe
+                    print("File loaded successfully!")
+                except pd.errors.EmptyDataError:
+                    print("The file is empty!")
+                except pd.errors.ParserError:
+                    print("Error during parsing!")
+                except FileNotFoundError:
+                    print(f"File {self.file_path} not found!")
+                except Exception as e:
+                    print(f"An unexpected error occurred: {e}")
+            else:
+                print("didn't detect file path")
+                self.df = None
+        else:
+            print("There is df")
+            numeric_df = self.df.select_dtypes(include=["number"]).columns
+            self.cols_list = numeric_df
 
     def set_data(self, col_name):
         """
@@ -85,6 +109,11 @@ class NumericColumn:
         -> None
 
         """
+        if isinstance(self.df, pd.DataFrame):
+            if not self.df.empty:
+                self.serie = self.df[col_name]
+                self.convert_serie_to_num()
+        
 
     def convert_serie_to_num(self):
         """
@@ -104,6 +133,12 @@ class NumericColumn:
         -> None
 
         """
+        if self.serie.dtype != int or self.serie.dtype != float: 
+            try:
+                convert_num = self.serie.astype(float).round(4)
+            except ValueError:
+                convert_num = pd.factorize(self.serie)[0]
+            self.serie = convert_num
         
 
     def is_serie_none(self):
@@ -124,7 +159,13 @@ class NumericColumn:
         -> (bool): Flag stating if the serie is empty or not
 
         """
-        
+        if isinstance(self.serie, pd.Series):
+            if not self.serie.empty:
+                return True
+            else:
+                return False
+        else:
+            return False
 
     def set_unique(self):
         """
@@ -144,7 +185,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.n_unique = len(self.serie.unique())
+        else:
+            self.n_unique = "Nan"
 
     def set_missing(self):
         """
@@ -164,7 +208,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.n_missing = self.serie.isnull().sum()
+        else:
+            self.n_missing = "Nan"
 
     def set_zeros(self):
         """
@@ -184,7 +231,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.n_zeros = self.serie.value_counts().get(0, 0)
+        else:
+            self.n_zeros = "Nan"
 
     def set_negatives(self):
         """
@@ -204,7 +254,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.n_negatives = (self.serie < 0).sum()
+        else:
+            self.n_negatives = "Nan"
 
     def set_mean(self):
         """
@@ -224,7 +277,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.col_mean = self.serie.mean()
+        else:
+            self.col_mean = "Nan"
 
     def set_std(self):
         """
@@ -244,7 +300,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.col_std = self.serie.std()
+        else:
+            self.col_std = "Nan"
     
     def set_min(self):
         """
@@ -264,7 +323,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.col_min = self.serie.min()
+        else:
+            self.col_min = "Nan"             
 
     def set_max(self):
         """
@@ -284,7 +346,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.col_max = self.serie.max()
+        else:
+            self.col_max = "Nan"             
 
     def set_median(self):
         """
@@ -304,7 +369,10 @@ class NumericColumn:
         -> None
 
         """
-        
+        if self.is_serie_none():
+            self.col_median = self.serie.median()
+        else:
+            self.col_median = "Nan"               
 
     def set_histogram(self):
         """
@@ -324,6 +392,17 @@ class NumericColumn:
         -> None
 
         """
+        if self.is_serie_none():
+            dataframe = self.serie.to_frame()
+            column_name = self.serie.name
+            chart = alt.Chart(dataframe[:5000]).mark_bar().encode(
+                alt.X(f"{column_name}:Q", bin=True),
+                y="count()"
+            )
+            self.histogram = chart
+        else:
+            empty_df = pd.DataFrame()
+            self.histogram = alt.Chart(empty_df).mark_point()
         
 
     def set_frequent(self, end=20):
@@ -345,8 +424,25 @@ class NumericColumn:
         -> None
 
         """
+        if self.is_serie_none():
+            top_20_values = self.serie.value_counts().head(20).index.tolist()
+            unique_value_count = []
+            unique_value_per = []
+            for i in top_20_values:
+                count = (self.serie == i).sum()
+                percentage = count / self.serie.size
+                unique_value_count.append(count)
+                unique_value_per.append(percentage)
+            self.frequent["value"] = top_20_values
+            self.frequent["occurrence"] = unique_value_count
+            self.frequent["percentage"] = unique_value_per
+        else:
+            self.frequent["value"] = ["Nan"]
+            self.frequent["occurrence"] = ["Nan"]
+            self.frequent["percentage"] = ["Nan"]
+
         
-    def get_summary(self,):
+    def get_summary(self):
         """
         --------------------
         Description
@@ -364,4 +460,37 @@ class NumericColumn:
         -> (pd.DataFrame): Formatted dataframe to be displayed on the Streamlit app
 
         """
-        
+        self.set_unique()
+        self.set_missing()
+        self.set_zeros()
+        self.set_negatives()
+        self.set_mean()
+        self.set_std()
+        self.set_min()
+        self.set_max()
+        self.set_median()
+        summary_table = pd.DataFrame(columns = ["Description", "Value"])
+        summary_table["Description"] = [
+            "Number of Unique Values",
+            "Number of Missing Values",
+            "Number of Ocurrence of 0 Value",
+            "Number of Negative Values",
+            "The Average Value",
+            "The Standard Deviation Value",
+            "The Minimum Value",
+            "The Maximum Value",
+            "The Median Value"
+        ]
+        summary_table["Value"] = [
+            self.n_unique, 
+            self.n_missing, 
+            self.n_zeros, 
+            self.n_negatives, 
+            self.col_mean, 
+            self.col_std, 
+            self.col_min,
+            self.col_max,
+            self.col_median 
+        ]
+        return summary_table
+    

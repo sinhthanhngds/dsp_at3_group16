@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 from tab_num.logics import NumericColumn
 
@@ -27,4 +28,44 @@ def display_tab_num_content(file_path=None, df=None):
     -> None
 
     """
+    instance = NumericColumn(file_path, df)
+    instance.find_num_cols()
+
+    select_column = st.selectbox("Which numeric column do you want to explore", instance.cols_list)
+
+    # Based on select_column, generate below data
+    instance.set_data(col_name = select_column)
+    num = instance.get_summary()
     
+    
+    num_column = pd.DataFrame(num)
+
+    st.write("Numeric Column")
+    st.table(num_column)
+    
+    st.write("**Histogram**")
+    instance.set_histogram()
+    st.altair_chart(instance.histogram)
+
+    instance.set_frequent()
+    freq_Data = instance.frequent
+
+    st.write("**Most Frequent Values**")
+    st.dataframe(freq_Data)
+    
+def dataframe():
+    st.write("This is the dataframe.")
+
+def text_series():
+    st.write("This is the text series.")
+
+tab1, tab2, tab3 = st.tabs(["DataFrame", "Numeric Series", "Text Series"])
+
+# display_tab_num_content()
+with tab1:
+    dataframe()
+with tab2:
+    display_tab_num_content()
+    # display_tab_num_content()
+with tab3:
+    text_series()

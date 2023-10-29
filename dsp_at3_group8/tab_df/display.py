@@ -25,3 +25,47 @@ def display_tab_df_content(file_path):
     -> None
     
     """
+    st.session_state.file_path = file_path
+    st.session_state.dataset = Dataset(st.session_state.file_path)
+    st.session_state.dataset.set_df()
+    st.session_state.dataset.set_columns()
+    st.session_state.dataset.set_dimensions()
+    st.session_state.dataset.set_duplicates()
+    st.session_state.dataset.set_missing()
+    ds_summary = st.session_state.dataset.get_summary()
+    ds_table = st.session_state.dataset.set_table()
+    
+    with st.expander("DataFrame"):
+        st.table(ds_summary)
+        st.table(ds_table.astype ('str'))
+    
+    with st.expander("Explore DataFrame"):
+        n = st.slider(
+            'Select the number of rows to be displayed',
+            min_value=5,
+            max_value=50,
+            value=5)
+        
+        option = st.radio(
+        'Exploration Method',
+        ["Head", "Tail", "Sample"]
+        )
+        
+        if option == "Head":
+            st.title(
+                "Top Rows of Selected Table"
+                )
+            ds_head = st.session_state.dataset.get_head(n)
+            st.write(ds_head)
+        elif option == "Tail":
+            st.title(
+                "Bottom Rows of Selected Table"
+                )
+            ds_tail = st.session_state.dataset.get_tail(n)
+            st.write(ds_tail)
+        elif option == "Sample":
+            st.title(
+                "Sample Rows of Selected Table"
+                )
+            ds_sample = st.session_state.dataset.get_sample(n)
+            st.write(ds_sample)
