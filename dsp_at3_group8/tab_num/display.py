@@ -53,19 +53,3 @@ def display_tab_num_content(file_path=None, df=None):
     st.write("**Most Frequent Values**")
     st.dataframe(freq_Data)
     
-def dataframe():
-    st.write("This is the dataframe.")
-
-def text_series():
-    st.write("This is the text series.")
-
-tab1, tab2, tab3 = st.tabs(["DataFrame", "Numeric Series", "Text Series"])
-
-# display_tab_num_content()
-with tab1:
-    dataframe()
-with tab2:
-    display_tab_num_content()
-    # display_tab_num_content()
-with tab3:
-    text_series()
