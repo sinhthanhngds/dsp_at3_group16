@@ -32,13 +32,16 @@ def display_tab_date_content(file_path=None, df=None):
     st.session_state.selected_date_col = st.selectbox ('What date time column do you want to explore?', st.session_state.date_column.cols_list)
     st.session_state.date_column.set_data(st.session_state.selected_date_col)
     if 'datetime' in str(st.session_state.date_column.serie.dtype):
-        markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Overview Table</h1>"
-        st.markdown(markdown_text, unsafe_allow_html=True)
-        st.table (st.session_state.date_column.get_summary())
-        st.altair_chart(st.session_state.date_column.barchart, use_container_width=True)
-        markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Most Frequent Values</h1>"
-        st.markdown(markdown_text, unsafe_allow_html=True)
-        st.table (st.session_state.date_column.frequent)
+        with st.expander ('Overview'):
+            markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Overview Table</h1>"
+            st.markdown(markdown_text, unsafe_allow_html=True)
+            st.table (st.session_state.date_column.get_summary())
+        with st.expander ('Frequency Histogram'):
+            st.altair_chart(st.session_state.date_column.barchart, use_container_width=True)
+        with st.expander ('Frequency Report'):
+            markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Most Frequent Values</h1>"
+            st.markdown(markdown_text, unsafe_allow_html=True)
+            st.table (st.session_state.date_column.frequent)
     else:
         st.warning ('Please select a data-time like column', icon = '😅')
     
