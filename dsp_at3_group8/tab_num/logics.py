@@ -66,9 +66,7 @@ class NumericColumn:
 
         """
         if self.df is None:
-            print("No df")
             if self.file_path != None:
-                print("detect file path")
                 try:
                     dataframe = pd.read_csv(self.file_path)
                     numeric_columns = dataframe.select_dtypes(include=["number"]).columns.tolist()
@@ -84,10 +82,8 @@ class NumericColumn:
                 except Exception as e:
                     print(f"An unexpected error occurred: {e}")
             else:
-                print("didn't detect file path")
                 self.df = None
         else:
-            print("There is df")
             numeric_df = self.df.select_dtypes(include=["number"]).columns
             self.cols_list = numeric_df
 
