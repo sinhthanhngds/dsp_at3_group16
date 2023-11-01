@@ -38,14 +38,14 @@ def display_tab_num_content(file_path=None, df=None):
 
     num = instance.get_summary()
     num_column = pd.DataFrame(num)
-    with st.expander ('Overview'):
+    with st.expander ('Overview', expanded = True):
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Overview Table</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
     #st.write("Numeric Column")
         st.table(num_column)
 
     instance.set_histogram()
-    with st.expander ('Histogram'):
+    with st.expander ('Histogram', expanded = True):
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'> Histogram</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
     #st.write("**Histogram**")
@@ -53,7 +53,7 @@ def display_tab_num_content(file_path=None, df=None):
         st.altair_chart(instance.histogram, use_container_width=True)
 
     instance.set_frequent()
-    with st.expander ('Values Frequency'):
+    with st.expander ('Values Frequency', expanded = True):
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'> Most Frequent Values</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
 

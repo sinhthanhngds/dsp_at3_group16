@@ -40,17 +40,17 @@ def display_tab_text_content(file_path=None, df=None):
     text_col_instance.set_data(selected_text_column)
     
     # Display the results in a Streamlit Expander container
-    with st.expander("Data Overview"):
+    with st.expander("Data Overview", expanded = True):
         # Display the summary as a Streamlit table
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Overview</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
         st.table(text_col_instance.get_summary().astype ('str'))
-    with st.expander('Histogram'):
+    with st.expander('Histogram', expanded = True):
         # Display the histogram using Streamlit's altair_chart
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Histogram</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
         st.altair_chart(text_col_instance.barchart, use_container_width=True)
-    with st.expander ('Data Frequency'):   
+    with st.expander ('Data Frequency', expanded = True):   
         # Display the frequent values using Streamlit's write
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Data Frequency</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)

@@ -73,7 +73,7 @@ class Dataset:
 
         """
         if self.file_path is not None:
-            self.df = pd.read_csv(self.file_path, sep=',')
+            self.df = pd.read_csv(self.file_path, sep = "," )
         else:
             self.df = "No CSV Selected"
         

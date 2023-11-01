@@ -35,16 +35,16 @@ def display_tab_df_content(file_path):
     ds_summary = st.session_state.dataset.get_summary()
     ds_table = st.session_state.dataset.set_table()
     
-    with st.expander("Overview"):
+    with st.expander("Overview", expanded = True):
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Data summary</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
         st.table(ds_summary)
-    with st.expander ('Data Types & Memory Usage'):
+    with st.expander ('Data Types & Memory Usage',expanded = True):
         markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Data Types & Memory Usage</h1>"
         st.markdown(markdown_text, unsafe_allow_html=True)
         st.table(ds_table.astype ('str'))
     
-    with st.expander("Explore DataFrame"):
+    with st.expander("Explore DataFrame", expanded = True):
         n = st.slider(
             'Select the number of rows to be displayed',
             min_value=5,
@@ -57,20 +57,17 @@ def display_tab_df_content(file_path):
         )
         
         if option == "Head":
-            st.title(
-                "Top Rows of Selected Table"
-                )
+            markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Top Rows of Selected Data</h1>"
+            st.markdown(markdown_text, unsafe_allow_html=True)
             ds_head = st.session_state.dataset.get_head(n)
-            st.write(ds_head)
+            st.write(ds_head, use_container_width = True)
         elif option == "Tail":
-            st.title(
-                "Bottom Rows of Selected Table"
-                )
-            ds_tail = st.session_state.dataset.get_tail(n)
-            st.write(ds_tail)
+            markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Tail Rows of Selected Data</h1>"
+            st.markdown(markdown_text, unsafe_allow_html=True) 
+            ds_tail= st.session_state.dataset.get_tail(n)
+            st.write(ds_tail, use_container_width = True)
         elif option == "Sample":
-            st.title(
-                "Sample Rows of Selected Table"
-                )
+            markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Sample Rows of Selected Data</h1>"
+            st.markdown(markdown_text, unsafe_allow_html=True)
             ds_sample = st.session_state.dataset.get_sample(n)
-            st.write(ds_sample)
+            st.write(ds_sample, use_container_width = True)
