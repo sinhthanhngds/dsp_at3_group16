@@ -27,4 +27,27 @@ def display_tab_text_content(file_path=None, df=None):
     -> None
 
     """
+    # Instantiate the TextColumn class
+    text_col_instance = TextColumn(file_path=file_path, df=df)
+    
+    # Find text columns
+    text_col_instance.find_text_cols()
+    
+    # Display a Streamlit select box for text columns
+    selected_text_column = st.selectbox("Select a text column:", text_col_instance.cols_list)
+    
+    # Compute the necessary data for the selected column
+    text_col_instance.set_data(selected_text_column)
+    
+    # Display the results in a Streamlit Expander container
+    with st.expander("Text Column Analysis"):
+        # Display the summary as a Streamlit table
+        st.table(text_col_instance.get_summary())
+        
+        # Display the histogram using Streamlit's altair_chart
+        st.altair_chart(text_col_instance.barchart, use_container_width=True)
+        
+        # Display the frequent values using Streamlit's write
+        st.write(text_col_instance.frequent)
+
     
