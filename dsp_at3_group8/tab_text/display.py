@@ -42,7 +42,11 @@ def display_tab_text_content(file_path=None, df=None):
     # Display the results in a Streamlit Expander container
     with st.expander("Text Column Analysis"):
         # Display the summary as a Streamlit table
+<<<<<<< HEAD
         st.table(text_col_instance.get_summary())
+=======
+        st.table(text_col_instance.get_summary().astype ('str'))
+>>>>>>> origin/testing
         
         # Display the histogram using Streamlit's altair_chart
         st.altair_chart(text_col_instance.barchart, use_container_width=True)
