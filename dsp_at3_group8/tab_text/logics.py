@@ -64,6 +64,9 @@ class TextColumn:
         -> None
 
         """
+        if self.file_path:
+            self.df = pd.read_csv(self.file_path)
+        self.cols_list = self.df.select_dtypes(include=[object]).columns.tolist()
         
 
     def set_data(self, col_name):
@@ -86,6 +89,18 @@ class TextColumn:
         --------------------
         -> None
         """
+        self.serie = self.df[col_name]
+        self.set_unique()
+        self.set_missing()
+        self.set_empty()
+        self.set_mode()
+        self.set_whitespace()
+        self.set_lowercase()
+        self.set_uppercase()
+        self.set_alphabet()
+        self.set_digit()
+        self.set_barchart()
+        self.set_frequent()
         
 
     def convert_serie_to_text(self):
@@ -106,6 +121,7 @@ class TextColumn:
         -> None
 
         """
+        self.serie = self.serie.astype(str)
         
 
     def is_serie_none(self):
@@ -126,6 +142,7 @@ class TextColumn:
         -> (bool): Flag stating if the serie is empty or not
 
         """
+        return self.serie is None or self.serie.empty
         
 
     def set_unique(self):
@@ -146,6 +163,8 @@ class TextColumn:
         -> None
 
         """
+        self.n_unique = self.serie.nunique()
+
         
 
     def set_missing(self):
@@ -166,6 +185,8 @@ class TextColumn:
         -> None
 
         """
+        self.n_missing = self.serie.isnull().sum()
+
         
 
     def set_empty(self):
@@ -186,6 +207,7 @@ class TextColumn:
         -> None
 
         """
+        self.n_empty = (self.serie == "").sum()
         
 
     def set_mode(self):
@@ -206,6 +228,7 @@ class TextColumn:
         -> None
 
         """
+        self.n_mode = self.serie.mode().iloc[0]
         
 
     def set_whitespace(self):
@@ -226,6 +249,7 @@ class TextColumn:
         -> None
 
         """
+        self.n_space = self.serie.str.isspace().sum()
         
 
     def set_lowercase(self):
@@ -246,6 +270,7 @@ class TextColumn:
         -> None
 
         """
+        self.n_lower = self.serie.str.islower().sum()
         
 
     def set_uppercase(self):
@@ -266,6 +291,7 @@ class TextColumn:
         -> None
 
         """
+        self.n_upper = self.serie.str.isupper().sum()
         
     
     def set_alphabet(self):
@@ -286,6 +312,8 @@ class TextColumn:
         -> None
 
         """
+        self.n_alpha = self.serie.str.isalpha().sum()
+
         
 
     def set_digit(self):
@@ -306,6 +334,7 @@ class TextColumn:
         -> None
 
         """
+        self.n_digit = self.serie.str.isdigit().sum()
         
 
     def set_barchart(self):  
@@ -326,6 +355,13 @@ class TextColumn:
         -> None
 
         """
+        value_counts = self.serie.value_counts().reset_index()
+        value_counts.columns = ["Value", "Count"]
+        self.barchart = alt.Chart(value_counts).mark_bar().encode(
+            x="Value:N",
+            y="Count:Q",
+            tooltip=["Value:N", "Count:Q"]
+        ).interactive().properties(width=600, height=400)
         
       
     def set_frequent(self, end=20):
@@ -347,6 +383,10 @@ class TextColumn:
         -> None
 
         """
+        value_counts = self.serie.value_counts().reset_index()
+        value_counts.columns = ["value", "occurrence"]
+        value_counts["percentage"] = (value_counts["occurrence"] / len(self.serie)) * 100
+        self.frequent = value_counts.head(end)
         
 
     def get_summary(self):
@@ -367,4 +407,9 @@ class TextColumn:
         -> (pd.DataFrame): Formatted dataframe to be displayed on the Streamlit app
 
         """
+        summary_data = {
+            "Description": ["Unique values", "Missing values", "Empty strings", "Mode", "Whitespace only", "Lowercase only", "Uppercase only", "Alphabet only", "Numeric only"],
+            "Value": [self.n_unique, self.n_missing, self.n_empty, self.n_mode, self.n_space, self.n_lower, self.n_upper, self.n_alpha, self.n_digit]
+        }
+        return pd.DataFrame(summary_data)
         
