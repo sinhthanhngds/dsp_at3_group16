@@ -35,21 +35,30 @@ def display_tab_num_content(file_path=None, df=None):
 
     # Based on select_column, generate below data
     instance.set_data(col_name = select_column)
-    num = instance.get_summary()
-    
-    
-    num_column = pd.DataFrame(num)
 
-    st.write("Numeric Column")
-    st.table(num_column)
-    
-    st.write("**Histogram**")
+    num = instance.get_summary()
+    num_column = pd.DataFrame(num)
+    with st.expander ('Overview'):
+        markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Overview Table</h1>"
+        st.markdown(markdown_text, unsafe_allow_html=True)
+    #st.write("Numeric Column")
+        st.table(num_column)
+
     instance.set_histogram()
-    st.altair_chart(instance.histogram)
+    with st.expander ('Histogram'):
+        markdown_text = "<h1 style='text-align: center; font-size: 16px;'> Histogram</h1>"
+        st.markdown(markdown_text, unsafe_allow_html=True)
+    #st.write("**Histogram**")
+        #instance.set_histogram()
+        st.altair_chart(instance.histogram, use_container_width=True)
 
     instance.set_frequent()
-    freq_Data = instance.frequent
+    with st.expander ('Values Frequency'):
+        markdown_text = "<h1 style='text-align: center; font-size: 16px;'> Most Frequent Values</h1>"
+        st.markdown(markdown_text, unsafe_allow_html=True)
 
-    st.write("**Most Frequent Values**")
-    st.dataframe(freq_Data)
+        freq_Data = instance.frequent
+
+    #st.write("**Most Frequent Values**")
+        st.dataframe(freq_Data, use_container_width = True)
     

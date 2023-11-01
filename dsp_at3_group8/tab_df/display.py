@@ -35,8 +35,13 @@ def display_tab_df_content(file_path):
     ds_summary = st.session_state.dataset.get_summary()
     ds_table = st.session_state.dataset.set_table()
     
-    with st.expander("DataFrame"):
+    with st.expander("Overview"):
+        markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Data summary</h1>"
+        st.markdown(markdown_text, unsafe_allow_html=True)
         st.table(ds_summary)
+    with st.expander ('Data Types & Memory Usage'):
+        markdown_text = "<h1 style='text-align: center; font-size: 16px;'>Data Types & Memory Usage</h1>"
+        st.markdown(markdown_text, unsafe_allow_html=True)
         st.table(ds_table.astype ('str'))
     
     with st.expander("Explore DataFrame"):
