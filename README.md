@@ -24,7 +24,6 @@ Regarding imported libraries and packages, we installed them with particular ver
 
 
 ## How to Setup
--------------Installation-----------
 Our web application was supported by the following environment and packages. Please make sure they have been installed with the specific versions:
 
 	+ Python: 3.9.13
@@ -36,8 +35,11 @@ Our web application was supported by the following environment and packages. Ple
 	+ Pandas: 2.0.3
 Application installation on local machine was taken as below (command prompt), with the assumption that you would install the application at "installation_directory":
 On terminal:
+
 + cd [installation_directory]
+
 + git clone git@github.com:sinhthanhngds/dsp_at3_group8.git
+
 The terminal will show whether the installation is successful
 
 
@@ -52,26 +54,31 @@ The application webpage should show up. Simply upload your .csv file and start.
 ## Project Structure
 <List all folders and files of this project and provide quick description for each of them>
 Folders structures:
----dsp_at3_group8 ---app ---- __init__.py
-|	       |         \---  streamlit_app.py: contains codes for .csv file upload and calling to 
-|	       |	                              relevant functions
-|	       |--tab_df --- __init__.py	
-|              |         \--- display.py: displays information stored in logics.py
-|	       |          \--- logics.py: calculates and stores overall dataframe description to be
-|	       |				  displayed
-|              |--tab_num --- __init__.py
-|              |          \--- display.py: displays information stored in logics.py
-|              |           \--- logis.py: calculates and stores numerical data description to be              | 	       |				  displayed
-|              |--tab_text --- __init__.py
-|              |          \--- display.py: displays information stored in logics.py
-|              |           \--- logis.py: calculates and stores object columns information to be 
-|	       |					displayed
-|	       |--tab_date --- __init__.py
-|              |          \--- display.py: displays information stored in logics.py
-|              |           \--- logis.py: calculates and stores information about datetime columns
-|	       |		 		to be displayed
-|              |--requirements.txt: stores libraries and packages requirements (versions)
----.gitignore ---contains files to ignore: .DS_Store, and __pycache__
+dsp_at3_group8/
+├── README.md: project description
+├── .gitignore: ignoring unwanted files: .DS_Store, __pycache__
+├── requirements.txt
+├── dsp_at3_group8/
+│   ├── app/
+│   │	├── streamlit_app.py: codes for .csv file upload and calling to relevant functions
+│   │	├── __init__.py
+│   ├── tab_df/
+│   │	├── __init__.py
+│   │	├── logics.py: calculates and stores overall dataframe information to be displayed
+│   │   ├── display.py: displays information stored in logics.py
+│   ├── tab_num/
+│   │	├── __init__.py
+│   │	├── logics.py: extractss, calculates and stores numerical column information
+│   │	├── display.py: numerical column selection and display information stored in logics.py
+│   ├── tab_text/
+│   │	├── __init__.py
+│   │	├── logics.py: extracts, calculates and stores objects column information
+│   │   ├── display.py: text column selection and display information stored in logics.py
+│   ├── tab_date/
+│   │	├── __init__.py
+│   │	├── logics.py: extracts, calculates and store information of selected date-time column
+│   │	├── display.py: datetime column selection and display information stored in logics.py
+
 
 
 
