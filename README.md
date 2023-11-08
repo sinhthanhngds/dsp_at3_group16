@@ -1,7 +1,7 @@
-# <project title>
+## CSV Explorer Web Application
 
 ## Authors
-Group <group number> : 
+Group 8 - Data Science Practice - University of Technology Sydney : 
 - <first and last name> (<UTS student id>)
 - <first and last name> (<UTS student id>)
 - <first and last name> (<UTS student id>)
@@ -25,34 +25,37 @@ Regarding imported libraries and packages, we installed them with particular ver
 
 ## How to Setup
 Our web application was supported by the following environment and packages. Please make sure they have been installed with the specific versions:
-
-	+ Python: 3.9.13
-
-	+ Streamlit: 1.13.0
-
-	+ Altair: 4.2.0
-
-	+ Pandas: 2.0.3
+```
+	* Python: 3.9.13
+	* Streamlit: 1.13.0
+	* Altair: 4.2.0
+	* Pandas: 2.0.3
+```
 Application installation on local machine was taken as below (command prompt), with the assumption that you would install the application at "installation_directory":
 On terminal:
-
-+ cd [installation_directory]
-
-+ git clone git@github.com:sinhthanhngds/dsp_at3_group8.git
-
+```
+cd [installation_directory]
+```
+```
+git clone git@github.com:sinhthanhngds/dsp_at3_group8.git
+```
 The terminal will show whether the installation is successful
 
 
 ## How to Run the Program
 To run the program:
 On terminal:
-+ cd
-+ cd [installation_directory]/dsp_at3_group8/dsp_at3_group8/app
-+ streamlit run streamlit_app.py
+```
+cd
+```
+```
+cd [installation_directory]/dsp_at3_group8/dsp_at3_group8/app
+```
+```
+streamlit run streamlit_app.py
+```
 The application webpage should show up. Simply upload your .csv file and start.
-
 ## Project Structure
-<List all folders and files of this project and provide quick description for each of them>
 Folders structures:
 ```
 dsp_at3_group8/
