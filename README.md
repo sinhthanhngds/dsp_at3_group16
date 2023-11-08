@@ -8,19 +8,19 @@ Group 8 - Data Science Practice - University of Technology Sydney :
 
 ## Description
 <What your application does>
-- Our CSV Explorer Web Application was built with the target of making data exploration and analysis way easier who those who do not have fundamental experience in the field of data. It combines interactive dashboards, statistical tools and user-friendly data visualization, although does not require any complicated program installed or in-depth training.
+	Our CSV Explorer Web Application was built with the target of making data exploration and analysis way easier who those who do not have fundamental experience in the field of data. It combines interactive dashboards, statistical tools and user-friendly data visualization, although does not require any complicated program installed or in-depth training.
 
-- Similar to any application developing team, we also faced up with a limited number of challenges, namely, coding inconsistency, packages limitation and versional conflicts.
+Similar to any application developing team, we also faced up with a limited number of challenges, namely, coding inconsistency, packages limitation and versional conflicts.
 
-The application was contributed by 4 developers that came from different backgrounds. We have different coding experience, knowledge and methods to deal with data. Moreover, functions on our application are strictly related to each other. As the result, conflicts and errors raised, leading to a large amount of time to resolve.
+- The application was contributed by 4 developers that came from different backgrounds. We have different coding experience, knowledge and methods to deal with data. Moreover, functions on our application are strictly related to each other. As the result, conflicts and errors raised, leading to a large amount of time to resolve.
 
-Regarding imported libraries and packages, we installed them with particular versions mentioned in 'requirements.txt'. However, there were also conflicts between those libraries when we were implementing our codes, which could be caused by packages loss during installation.
+- Regarding imported libraries and packages, we installed them with particular versions mentioned in 'requirements.txt'. However, there were also conflicts between those libraries when we were implementing our codes, which could be caused by packages loss during installation.
 
-- Future improvement:
-	+ Advanced Data Visualization: Incorporate advanced charting and graphing capabilities to enable users to visualize data trends and patterns more effectively. Support a wide range of chart types (e.g., bar charts, scatter plots, heatmaps) to cater to diverse data needs.
-	+ Data Transformation Tools: Enhance the application with powerful data transformation features, including the ability to merge, split, and pivot columns, apply mathematical operations, and create calculated fields.
-	+ Machine Learning Integration: Incorporate machine learning and predictive analytics capabilities for advanced data analysis and pattern recognition.
-	+ User Feedback Mechanism: Implement a feedback system that allows users to suggest improvements and report issues directly from within the application.
+Future improvement:
+	- Advanced Data Visualization: Incorporate advanced charting and graphing capabilities to enable users to visualize data trends and patterns more effectively. Support a wide range of chart types (e.g., bar charts, scatter plots, heatmaps) to cater to diverse data needs.
+	- Data Transformation Tools: Enhance the application with powerful data transformation features, including the ability to merge, split, and pivot columns, apply mathematical operations, and create calculated fields.
+	- Machine Learning Integration: Incorporate machine learning and predictive analytics capabilities for advanced data analysis and pattern recognition.
+	- User Feedback Mechanism: Implement a feedback system that allows users to suggest improvements and report issues directly from within the application.
 
 
 ## How to Setup
