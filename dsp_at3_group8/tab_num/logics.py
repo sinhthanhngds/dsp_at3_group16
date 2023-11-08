@@ -394,7 +394,7 @@ class NumericColumn:
             chart = alt.Chart(dataframe[:5000]).mark_bar().encode(
                 alt.X(f"{column_name}:Q", bin=True),
                 y="count()"
-            )
+            ).interactive()
             self.histogram = chart
         else:
             empty_df = pd.DataFrame()
