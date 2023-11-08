@@ -54,11 +54,13 @@ The application webpage should show up. Simply upload your .csv file and start.
 ## Project Structure
 <List all folders and files of this project and provide quick description for each of them>
 Folders structures:
+'''
 dsp_at3_group8/
 ├── README.md: project description
-├── .gitignore: ignoring unwanted files: .DS_Store, __pycache__
-├── requirements.txt
+├── .gitignore: ignore changes in .DS_Store and __pycache__
+├── .gitattributes
 ├── dsp_at3_group8/
+│   ├── requirements.txt
 │   ├── app/
 │   │	├── streamlit_app.py: codes for .csv file upload and calling to relevant functions
 │   │	├── __init__.py
@@ -78,7 +80,7 @@ dsp_at3_group8/
 │   │	├── __init__.py
 │   │	├── logics.py: extracts, calculates and store information of selected date-time column
 │   │	├── display.py: datetime column selection and display information stored in logics.py
-
+'''
 
 
 
