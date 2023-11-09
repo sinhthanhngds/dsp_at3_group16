@@ -54,7 +54,7 @@ On terminal:
 cd
 ```
 ```
-cd [installation_directory]/dsp_at3_group16/dsp_at3_group16/app
+cd [installation_directory]/dsp_at3_group16/app
 ```
 ```
 streamlit run streamlit_app.py
@@ -64,30 +64,28 @@ The application webpage should show up. Simply upload your .csv file and start.
 Folders structures:
 ```
 dsp_at3_group16/
-├── README.md: project description
-├── .gitignore: ignore changes in .DS_Store and __pycache__
-├── .gitattributes
-├── dsp_at3_group16/
-│   ├── requirements.txt
-│   ├── app/
-│   │	├── streamlit_app.py: codes for .csv file upload and calling to relevant functions
-│   │	├── __init__.py
-│   ├── tab_df/
-│   │	├── __init__.py
-│   │	├── logics.py: calculates and stores overall dataframe information to be displayed
-│   │   ├── display.py: displays information stored in logics.py
-│   ├── tab_num/
-│   │	├── __init__.py
-│   │	├── logics.py: extractss, calculates and stores numerical column information
-│   │	├── display.py: numerical column selection and display information stored in logics.py
-│   ├── tab_text/
-│   │	├── __init__.py
-│   │	├── logics.py: extracts, calculates and stores objects column information
-│   │   ├── display.py: text column selection and display information stored in logics.py
-│   ├── tab_date/
-│   │	├── __init__.py
-│   │	├── logics.py: extracts, calculates and store information of selected date-time column
-│   │	├── display.py: datetime column selection and display information stored in logics.py
+├── README.md
+├── app
+│ ├── __init__.py
+│ └── streamlit_app.py: codes for .csv file upload and calling to relevant functions
+├── requirements.txt
+├── tab_date
+│ ├── __init__.py
+│ ├── display.py: datetime column selection and display information stored in logics.py
+│ └── logics.py: extracts, calculates and store information of selected date-time column
+├── tab_df
+│ ├── __init__.py
+│ ├── display.py: displays information stored in logics.py
+│ └── logics.py: calculates and stores overall dataframe information to be displayed
+├── tab_num
+│ ├── __init__.py
+│ ├── display.py: numerical column selection and display information stored in logics.py
+│ └── logics.py: extracts, calculates and stores numerical column information
+└── tab_text
+    ├── __init__.py
+    ├── display.py: text column selection and display information stored in logics.py
+    └── logics.py: extracts, calculates and stores objects column information
+
 ```
 
 
