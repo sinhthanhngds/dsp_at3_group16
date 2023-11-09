@@ -93,5 +93,6 @@ dsp_at3_group8/
 
 
 ## Citations
-<Mention authors and provide links code you source externally>
+[1] Streamlit Docs. (n.d.). https://docs.streamlit.io/
+[2] Van Der Aalst, W., & van der Aalst, W. (2016). Data science in action (pp. 3-23). Springer Berlin Heidelberg. 
     
