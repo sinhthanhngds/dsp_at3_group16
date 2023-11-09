@@ -1,6 +1,6 @@
-dsp_at3_group16/tab_date/__pycache__/
-dsp_at3_group16/tab_df/__pycache__/
-dsp_at3_group16/tab_num/__pycache__/
-dsp_at3_group16/tab_text/__pycache__/
-
+tab_date/__pycache__/
+tab_df/__pycache__/
+tab_num/__pycache__/
+tab_text/__pycache__/
 **/.DS_Store
+**/.Rhistory
