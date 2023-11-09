@@ -2,7 +2,7 @@
 
 ## Authors
 ```
-** Group 8 - Data Science Practice - University of Technology Sydney **
+** Group 16 - Data Science Practice - University of Technology Sydney **
 Sinh Thanh Nguyen - 25099704
 Xinhui Wang 	  - 14380428
 Siheng Mu 	  - 13475823
