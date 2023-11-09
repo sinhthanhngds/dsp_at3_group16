@@ -42,7 +42,7 @@ On terminal:
 cd [installation_directory]
 ```
 ```
-git clone git@github.com:sinhthanhngds/dsp_at3_group8.git
+git clone git@github.com:sinhthanhngds/dsp_at3_group16.git
 ```
 The terminal will show whether the installation is successful
 
@@ -54,7 +54,7 @@ On terminal:
 cd
 ```
 ```
-cd [installation_directory]/dsp_at3_group8/dsp_at3_group8/app
+cd [installation_directory]/dsp_at3_group16/dsp_at3_group16/app
 ```
 ```
 streamlit run streamlit_app.py
@@ -63,11 +63,11 @@ The application webpage should show up. Simply upload your .csv file and start.
 ## Project Structure
 Folders structures:
 ```
-dsp_at3_group8/
+dsp_at3_group16/
 ├── README.md: project description
 ├── .gitignore: ignore changes in .DS_Store and __pycache__
 ├── .gitattributes
-├── dsp_at3_group8/
+├── dsp_at3_group16/
 │   ├── requirements.txt
 │   ├── app/
 │   │	├── streamlit_app.py: codes for .csv file upload and calling to relevant functions
