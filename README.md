@@ -1,22 +1,27 @@
 ## CSV Explorer Web Application
 
 ## Authors
-Group 8 - Data Science Practice - University of Technology Sydney : 
-- <first and last name> (<UTS student id>)
-- <first and last name> (<UTS student id>)
-- <first and last name> (<UTS student id>)
+```
+** Group 8 - Data Science Practice - University of Technology Sydney **
+Sinh Thanh Nguyen - 25099704
+Xinhui Wang 	  - 14380428
+Siheng Mu 	  - 13475823
+Aditi Vyas 	  - 24666152
+```
+
 
 ## Description
-<What your application does>
-Our CSV Explorer Web Application was built with the target of making data exploration and analysis way easier who those who do not have fundamental experience in the field of data. It combines interactive dashboards, statistical tools and user-friendly data visualization, although does not require any complicated program installed or in-depth training.
+Our CSV Explorer Web Application was built with the target of making data exploration and analysis way easier for those who do not have fundamental experience in the data-relcated specialisation. It combines interactive dashboards, statistical tools and user-friendly data visualization, although does not require any complicated program installed or in-depth training.
 
-Similar to any application developing team, we also faced up with a limited number of challenges, namely, coding inconsistency, packages limitation and versional conflicts.
+##### Limitation
+Despite its robustness and convenience, our application is currently facing up with the following limitations:
+- File size limitation: CSV files can vary greatly in size, while our application has a maximum file upload limit of 200MB.
+- Data Import Compatibility: our application could not handle all CSV variations, and issues with delimiters, encoding, or file formats may arise during importing operations.
+- Lack of Advanced Analysis Tools: While the application can help with basic data manipulation, it does not offer advanced statistical analysis or machine learning capabilities, which might be required for in-depth data analysis.
 
-- The application was contributed by 4 developers that came from different backgrounds. We have different coding experience, knowledge and methods to deal with data. Moreover, functions on our application are strictly related to each other. As the result, conflicts and errors raised, leading to a large amount of time to resolve.
 
-- Regarding imported libraries and packages, we installed them with particular versions mentioned in 'requirements.txt'. However, there were also conflicts between those libraries when we were implementing our codes, which could be caused by packages loss during installation.
-
-Future improvement:
+##### Future improvement:
+Because of the ever-increasing demand for instant, advanced and multitasking applications, the following functionalities could be considered to be appended to our CSV Explorer:
 - Advanced Data Visualization: Incorporate advanced charting and graphing capabilities to enable users to visualize data trends and patterns more effectively. Support a wide range of chart types (e.g., bar charts, scatter plots, heatmaps) to cater to diverse data needs.
 - Data Transformation Tools: Enhance the application with powerful data transformation features, including the ability to merge, split, and pivot columns, apply mathematical operations, and create calculated fields.
 - Machine Learning Integration: Incorporate machine learning and predictive analytics capabilities for advanced data analysis and pattern recognition.
@@ -89,3 +94,4 @@ dsp_at3_group8/
 
 ## Citations
 <Mention authors and provide links code you source externally>
+    
