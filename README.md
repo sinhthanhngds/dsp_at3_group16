@@ -1,6 +1,6 @@
 ## CSV Explorer Web Application
 
-## Authors
+## Authors:
 ```
 ** Group 16 - Data Science Practice - University of Technology Sydney **
 Sinh Thanh Nguyen - 25099704
