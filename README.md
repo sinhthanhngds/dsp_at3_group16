@@ -65,23 +65,23 @@ Folders structures:
 ```
 dsp_at3_group16/
 ├── README.md
-├── app
-│ ├── __init__.py
-│ └── streamlit_app.py: codes for .csv file upload and calling to relevant functions
+├── app/
+│   ├── __init__.py
+│   └── streamlit_app.py: codes for .csv file upload and calling to relevant functions
 ├── requirements.txt
-├── tab_date
-│ ├── __init__.py
-│ ├── display.py: datetime column selection and display information stored in logics.py
-│ └── logics.py: extracts, calculates and store information of selected date-time column
-├── tab_df
-│ ├── __init__.py
-│ ├── display.py: displays information stored in logics.py
-│ └── logics.py: calculates and stores overall dataframe information to be displayed
-├── tab_num
-│ ├── __init__.py
-│ ├── display.py: numerical column selection and display information stored in logics.py
-│ └── logics.py: extracts, calculates and stores numerical column information
-└── tab_text
+├── tab_date/
+│   ├── __init__.py
+│   ├── display.py: datetime column selection and display information stored in logics.py
+│   └── logics.py: extracts, calculates and store information of selected date-time column
+├── tab_df/
+│   ├── __init__.py
+│   ├── display.py: displays information stored in logics.py
+│   └── logics.py: calculates and stores overall dataframe information to be displayed
+├── tab_num/
+│   ├── __init__.py
+│   ├── display.py: numerical column selection and display information stored in logics.py
+│   └── logics.py: extracts, calculates and stores numerical column information
+└── tab_text/
     ├── __init__.py
     ├── display.py: text column selection and display information stored in logics.py
     └── logics.py: extracts, calculates and stores objects column information
